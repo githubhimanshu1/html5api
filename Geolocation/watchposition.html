@@ -7,29 +7,7 @@
 
 
  		<link rel="stylesheet" type="text/css" href="../thirdparty/bootstrap-3.3.5-dist/css/bootstrap.min.css"/>
- 		<script type="text/javascript">
- 			function locate()
- 			{
- 				var geolocationcheck=window.navigator.geolocation;
- 				if(geolocationcheck)
- 				{
- 						navigator.geolocation.getCurrentPosition(myposition);
- 					    
- 				}
- 				else
- 				{
- 					document.querySelector("#msg").innerHTML="<span>Browser does not support geolocation service</span>";
- 				}
- 			}
-
- 			function myposition(position)
- 			{
- 					var coordinates=position.coords.latitude+","+position.coords.longitude;
- 					document.querySelector("#msg").innerHTML="<br/><span>Lattitude :"+position.coords.latitude+"- Longitude :"+position.coords.longitude+"</span>";
-
- 			}
-
- 		</script>
+ 		
 
  	</head>
  	<body>
@@ -67,14 +45,14 @@
  					<div class="col col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
  					<div class="col col-xs-8 col-sm-8 col-md-8 col-lg-8" style="background-color:#f0f0f0;font-weight:800;padding:10px">
  							<span class="btn btn-warning" style="margin:0px auto">
- 								Geolocation API </span><br/><br/>
- 								<p>In this example we will track the position and will be showing it on a google map</p>
+ 								Mapping Location on Map </span><br/><br/>
+ 								<p>In this example we will track the position of user using geolocation api of HTML5. Click on the blue button below and click ok to enable access for the geolocation position</p>
  								<br/>
  								<button class="btn btn-primary" onclick="locate()">Check Position</button>
- 								<div id="msg"></div>
+ 								<div id="mapholder" style="overflow:hidden;margin:0px auto"></div>
 
  								<br/>
- 								<span class="text-right"><a href="markingmap.html" class="btn btn-danger">Next:Marking on Map</a></span>
+ 								<span class="text-right"><a href="watchposition.html" class="btn btn-danger">Next:WatchPosition Example</a></span>
  							
 
  					</div>
@@ -83,6 +61,30 @@
 
  			</div>
  		</div>
- 		
+ 		<script type="text/javascript">
+ 			function locate()
+ 			{
+ 				var geolocationcheck=window.navigator.geolocation;
+ 				if(geolocationcheck)
+ 				{
+ 						navigator.geolocation.getCurrentPosition(myposition);
+ 					    
+ 				}
+ 				else
+ 				{
+ 					document.querySelector("#msg").innerHTML="<span>Browser does not support geolocation service</span>";
+ 				}
+ 			}
+
+ 			function myposition(position)
+ 			{
+ 						var coordinates=position.coords.latitude+","+position.coords.longitude;
+var generate_image_path = "https://maps.googleapis.com/maps/api/staticmap?center="+coordinates+"&zoom=14&size=400x300&sensor=false";
+console.log(generate_image_path);
+ 					document.querySelector("#mapholder").innerHTML="<img src='"+generate_image_path+"'>";
+
+ 			}
+
+ 		</script>
  	</body>
  </html>
