@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+ <html>
+ 	<head>
+ 		<script type="text/javascript" src="../thirdparty/jquery-1.9.1.min.js"></script>
+ 		<script type="text/javascript" src="../thirdparty/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+
+
+
+ 		<link rel="stylesheet" type="text/css" href="../thirdparty/bootstrap-3.3.5-dist/css/bootstrap.min.css"/>
+ 		<script type="text/javascript">
+ 		 			function locate()
+ 			{
+ 				window.navigator.getUserMedia=(window.navigator.getUserMedia||window.navigator.webkitGetUserMedia||window.navigator.mozGetUserMedia||window.navigator.msGetUserMedia);
+ 				if(window.navigator.getUserMedia)
+ 				{
+ 					var filter=false;
+ 					window.navigator.getUserMedia({video:true,audio:true},function(){
+ 					var url=window.URL||window.webkitURL;
+ 					var videoelement=document.querySelector("#videoelement");
+ 					var canvaselement=document.querySelector("#canvaselement");
+ 					var context=canvaselement.getContext("2d");
+
+
+ 					videoelement.src=url?url.createObjectURL(arguments[0]):arguments[0];
+ 					videoelement.play();
+
+ 					videoelement.addEventListener("canplay",function(){
+
+ 						canvaselement.setAttribute("width",400);
+ 						canvaselement.setAttribute("height",300);
+
+ 					});
+ 					videoelement.addEventListener("play",function(){
+ 						setInterval(function(){
+ 								if(videoelement.paused||videoelement.ended)return;
+ 								context.fillRect(0,0,400,300);
+ 								context.drawImage(videoelement,0,0,400,300);
+ 								var canvasdata=context.getImageData(0,0,400,300);
+ 								var data=canvasdata.data;
+ 								var index=0;
+ 								for(index=0;index<data.length;index+=4)
+ 								{
+ 									var filterfactor=0.21*data[index]+0.34*data[index+1];
+ 									 data[index]=filterfactor;
+ 									 data[index+1]=filterfactor;
+ 									  data[index+2]=filterfactor;
+ 									
+
+ 								}
+ 								context.putImageData(canvasdata,0,0);
+
+ 						},30);
+ 					});
+ 					},function(){
+ 						document.querySelector("#errormsg").innerHTML="something went wrong";
+ 					});
+ 				}
+ 				else
+ 				{
+ 					document.querySelector("#errormsg").innerHTML="The media api is not supported for browser";
+ 				}
+ 			}
+
+ 			
+ 		</script>
+
+ 	</head>
+ 	<body>
+ 		<div class="nav navbar navbar-inverse">
+ 				<div class="container-fluid">
+ 						<div class="navbar-header">
+ 								<button type="button" class="navbar-toggle-collapsed" data-toggle="collapse" data-target="#myheader" aria-expanded="false">
+ 									<span class="sr-only">Toggle navigation</span>
+ 									<span class="icon-bar"></span>
+ 									<span class="icon-bar"></span>
+ 									<span class="icon-bar"></span>
+ 								</button>
+ 								<a class="navbar-brand" href="#">Geolocation Demo</a>
+
+
+ 						</div>
+
+ 						<div class="collapse navbar-collapse" id="myheader">
+ 								<ul class="nav navbar-nav">
+ 									<li class="active">
+ 											<a href="#">Link1</a>
+ 									</li>
+
+
+ 								</ul>
+
+
+ 						</div>
+
+
+ 				</div>
+ 		</div>
+ 			<div class="container-fluid">
+ 			<div class="row" style="margin-top:30px">
+ 					<div class="col col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
+ 					<div class="col col-xs-8 col-sm-8 col-md-8 col-lg-8" style="background-color:#f0f0f0;font-weight:800;padding:10px">
+ 							<span class="btn btn-warning" style="margin:0px auto">
+ 								UserMedia API </span><br/><br/>
+ 								<p>In this example we will look at how we can use the getusermedia api of HTML5 ,to access the media devices such as audio or video on our mobile </p>
+ 								<br/>
+ 								<button class="btn btn-primary" onclick="locate()">Start Webcam </button>
+ 								<video id="videoelement" style="width:auto;height:auto;display:none"></video>
+ 								<canvas id="canvaselement"></canvas>
+
+ 								<br/>
+ 								<span id="errormsg"></span>
+ 								<span class="text-right"><a href="markingmap.html" class="btn btn-danger">Next:Marking on Map</a></span>
+ 							
+
+ 					</div>
+ 					<div class="col col-xs-2 col-sm-2 col-md-2 col-lg-2" onclick="locate()"></div>
+
+
+ 			</div>
+ 		</div>
+ 		
+ 	</body>
+ </html>
