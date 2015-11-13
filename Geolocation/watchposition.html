@@ -46,13 +46,15 @@
  					<div class="col col-xs-8 col-sm-8 col-md-8 col-lg-8" style="background-color:#f0f0f0;font-weight:800;padding:10px">
  							<span class="btn btn-warning" style="margin:0px auto">
  								Mapping Location on Map </span><br/><br/>
- 								<p>In this example we will track the position of user using geolocation api of HTML5. Click on the blue button below and click ok to enable access for the geolocation position</p>
+ 								<p>The other intresting method of html5 geolocation api is watchposition method.It is mainly used when the position is to be tracked continuously.The api continues to return the position of user as the user moves.This proves to be useful for the mobile devices such as  mobile or tablets</p>
  								<br/>
  								<button class="btn btn-primary" onclick="locate()">Check Position</button>
+ 								<button class="btn btn-primary" onclick="stopTracking()">Stop Tracking </button>
  								<div id="mapholder" style="overflow:hidden;margin:0px auto"></div>
 
+
  								<br/>
- 								<span class="text-right"><a href="watchposition.html" class="btn btn-danger">Next:WatchPosition Example</a></span>
+ 								
  							
 
  					</div>
@@ -67,7 +69,7 @@
  				var geolocationcheck=window.navigator.geolocation;
  				if(geolocationcheck)
  				{
- 						navigator.geolocation.getCurrentPosition(myposition);
+ 						navigator.geolocation.watchPosition(myposition);
  					    
  				}
  				else
@@ -78,10 +80,8 @@
 
  			function myposition(position)
  			{
- 						var coordinates=position.coords.latitude+","+position.coords.longitude;
-var generate_image_path = "https://maps.googleapis.com/maps/api/staticmap?center="+coordinates+"&zoom=14&size=400x300&sensor=false";
-console.log(generate_image_path);
- 					document.querySelector("#mapholder").innerHTML="<img src='"+generate_image_path+"'>";
+ 					
+ 					document.querySelector("#mapholder").innerHTML="<br/><span>Lattitude :"+position.coords.latitude+"- Longitude :"+position.coords.longitude+"</span>";
 
  			}
 
