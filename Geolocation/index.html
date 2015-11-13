@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+ <html>
+ 	<head>
+ 		<script type="text/javascript" src="../thirdparty/jquery-1.9.1.min.js"></script>
+ 		<script type="text/javascript" src="../thirdparty/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+
+
+
+ 		<link rel="stylesheet" type="text/css" href="../thirdparty/bootstrap-3.3.5-dist/css/bootstrap.min.css"/>
+ 		<script type="text/javascript">
+ 			function locate()
+ 			{
+ 				var geolocationcheck=window.navigator.geolocation;
+ 				if(geolocationcheck)
+ 				{
+ 						navigator.geolocation.getCurrentPosition(myposition);
+ 						document.querySelector("#msg").innerHTML="<br/><span>Browser does not support geolocation service</span>";
+ 				}
+ 				else
+ 				{
+ 					document.querySelector("#msg").innerHTML="<span>Browser does not support geolocation service</span>";
+ 				}
+ 			}
+
+ 			function myposition(position)
+ 			{
+ 					console.log(arguments);
+ 					document.querySelector("#msg").innerHTML="<br/><span>Lattitude :"+position.coords.latitude+"- Longitude :"+position.coords.longitude+"</span>";
+
+ 			}
+
+ 		</script>
+
+ 	</head>
+ 	<body>
+ 		<div class="nav navbar navbar-inverse">
+ 				<div class="container-fluid">
+ 						<div class="navbar-header">
+ 								<button type="button" class="navbar-toggle-collapsed" data-toggle="collapse" data-target="#myheader" aria-expanded="false">
+ 									<span class="sr-only">Toggle navigation</span>
+ 									<span class="icon-bar"></span>
+ 									<span class="icon-bar"></span>
+ 									<span class="icon-bar"></span>
+ 								</button>
+ 								<a class="navbar-brand" href="#">Geolocation Demo</a>
+
+
+ 						</div>
+
+ 						<div class="collapse navbar-collapse" id="myheader">
+ 								<ul class="nav navbar-nav">
+ 									<li class="active">
+ 											<a href="#">Link1</a>
+ 									</li>
+
+
+ 								</ul>
+
+
+ 						</div>
+
+
+ 				</div>
+ 		</div>
+ 			<div class="container-fluid">
+ 			<div class="row" style="margin-top:80px">
+ 					<div class="col col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
+ 					<div class="col col-xs-8 col-sm-8 col-md-8 col-lg-8" style="font-weight:800;">
+ 							<span class="btn btn-warning" style="margin:0px auto">
+ 								Geolocation API </span><br/><br/>
+ 								<p>In this example we will track the position of user using geolocation api of HTML5. Click on the blue button below and click ok to enable access for the geolocation position</p>
+ 								<br/>
+ 								<button class="btn btn-primary" onclick="locate()">Check Position</button>
+ 								<div id="msg"></div>
+ 							
+
+ 					</div>
+ 					<div class="col col-xs-2 col-sm-2 col-md-2 col-lg-2" onclick="locate()"></div>
+
+
+ 			</div>
+ 		</div>
+ 		
+ 	</body>
+ </html>
