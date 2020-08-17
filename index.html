@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="node_modules/tooltipster/dist/css/tooltipster.main.css" />
+    <title>Document</title>
+    <style type="text/css">
+        body {
+            background-color: #ccc;
+            margin: 0px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+        }
+
+        #map-container {
+            height: 800px;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        svg text {
+            background-color: #2a2a2a;
+            color: #fff;
+            padding: 5px 10px;
+
+        }
+
+        .highcharts-title {
+            display: none;
+        }
+
+        div.circle {
+            width: 25px;
+            height: 25px;
+            background-color: #2a2a2a;
+            color: #fff;
+            border-radius: 25px;
+            line-height: 25px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map-container"></div>
+    <script type="text/javascript" src="node_modules/highcharts/highmaps.js"></script>
+    <script type="text/javascript" src="node_modules/highcharts/modules/exporting.js"></script>
+    <script type="text/javascript" src="https://code.highcharts.com/mapdata/custom/world-palestine-highres.js"></script>
+    <script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="node_modules/tooltipster/dist/js/tooltipster.bundle.min.js"></script>
+    <script src="https://code.highcharts.com/mapdata/countries/us/custom/us-all-territories.js"></script>
+    <script src="https://code.highcharts.com/mapdata/custom/asia.js"></script>
+    <script src="https://code.highcharts.com/mapdata/countries/gb/gb-all.js"></script>
+    <script src="https://code.highcharts.com/mapdata/countries/ch/ch-all.js"></script>
+    <script type="module" src="./script.js"></script>
+    <script type="module">
+
+
+        import { worldcode, uscode, asiacode, ukcode, swisscode, utilityfunction } from './script.js';
+        var data = worldcode;
+        window.maputility = utilityfunction;
+        // Create the chart
+        var chartRef = new Highcharts.mapChart('map-container', {
+            chart: {
+                map: 'custom/world-palestine-highres'
+            },
+            tooltip: {
+                backgroundColor: '#2a2a2a',
+                color: '#fff',
+                useHTML: true,
+                style: {
+                    color: '#ffffff'
+                },
+                distantce: 0
+            },
+            mapNavigation: {
+                enabled: true,
+                buttonOptions: {
+                    verticalAlign: 'top'
+                }
+            },
+            colorAxis: {
+                min: 0
+            },
+            series: [{
+                data: data,
+                enableMouseTracking: false,
+                name: 'Mydata ',
+                states: {
+                    hover: {
+                        color: '#BADA55'
+                    }
+                },
+                dataLabels: {
+                    enabled: true,
+                    format: '<div class="circle" onmouseover="maputility.attachTooltip(event,{point.value})">{point.value}</div>',
+                    useHTML: true
+                }
+            },
+
+            ],
+
+        });
+
+
+        function load(region) {
+
+        }
+
+
+    </script>
+
+    <div class="maploaders">
+        <button class="btn mapbtn" onclick="maputility.commondrilldown('map-container','us')">US</button>
+        <button class="btn mapbtn" onclick="maputility.commondrilldown('map-container','emea')">EMEA</button>
+        <button class="btn mapbtn" onclick="maputility.commondrilldown('map-container','swiss')">SWISS</button>
+        <button class="btn mapbtn" onclick="maputility.commondrilldown('map-container','asia')">ASIA</button>
+        <button class="btn mapbtn" onclick="maputility.commondrilldown('map-container','all')">ALL</button>
+    </div>
+</body>
+
+</html>
